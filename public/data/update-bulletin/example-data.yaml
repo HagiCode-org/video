@@ -1,0 +1,69 @@
+# Hagicode 更新简报 - 示例数据
+# 文件格式: YAML 1.2
+# 编码: UTF-8
+
+# 版本号 (格式: v1.2.0 或 1.2.0)
+version: v1.2.0
+
+# 发布日期 (格式: YYYY-MM-DD)
+releaseDate: 2026-01-17
+
+# 版本摘要 (可选)
+summary: 本次更新带来了全新的 OpenSpec 提案系统和智能规划功能，大幅提升开发效率。同时修复了多个已知问题，优化了整体性能。
+
+# 重点修改项列表 (最多 20 个)
+# 每个重点项展示在一页上，包含标题、详细描述、截图和标签
+highlights:
+  - id: highlight-1
+    title: OpenSpec 提案系统
+    description: 全新的提案管理界面，支持结构化的提案创建、评审和执行流程。让团队协作更加高效，开发决策更加透明。
+    screenshot: /screenshots/proposal-review.png
+    tags:
+      - feature
+
+  - id: highlight-2
+    title: 智能规划执行
+    description: AI 驱动的代码规划生成，支持分步执行和实时预览。规划执行过程中可以看到每个阶段的进展，不满意可随时调整。
+    screenshot: /screenshots/19.规划正在执行的阶段展示.png
+    tags:
+      - ai
+      - feature
+
+  - id: highlight-3
+    title: 代码评注系统
+    description: 支持对 AI 生成的代码进行行内评注和文件级别评注。提交批注后，AI 会根据您的反馈进行精准修改，确保代码质量。
+    screenshot: /screenshots/11.点击一个具体的文件，可以进行行内评注.png
+    tags:
+      - feature
+      - ui
+
+# 次要修改项列表 (最多 20 个)
+# 类别选项: feature, bugfix, improvement, ai, ui, performance, other
+minorItems:
+  - category: feature
+    title: 新增项目创建向导
+    description: 支持快速创建新项目，自动初始化项目结构
+
+  - category: improvement
+    title: 优化会话管理
+    description: 会话列表展示优化，支持快速切换和管理
+
+  - category: feature
+    title: 新增模式切换功能
+    description: 支持在不同开发模式间快速切换
+
+  - category: bugfix
+    title: 修复编辑权限问题
+    description: 解决部分用户无法编辑文件的权限问题
+
+  - category: improvement
+    title: 优化规划归档流程
+    description: 归档过程更流畅，支持查看归档历史
+
+  - category: feature
+    title: 新增 SDD 文档生成
+    description: 自动生成软件设计文档，支持 tab 页展示
+
+  - category: ui
+    title: 优化界面布局
+    description: 调整了文件列表和评注区域的布局

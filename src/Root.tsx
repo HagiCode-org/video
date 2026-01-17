@@ -1,4 +1,5 @@
 import "./index.css";
+import "./assets/fonts/fonts.css";
 import { Composition } from "remotion";
 import { HelloWorld, myCompSchema } from "./HelloWorld";
 import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
@@ -14,6 +15,10 @@ import { SmartSDDScene } from "./scenes/SmartSDDScene";
 import { EfficientScene } from "./scenes/EfficientScene";
 import { FunScene } from "./scenes/FunScene";
 import { CTAScene } from "./scenes/CTAScene";
+import HagicodeUpdateBulletin, { calculateDuration, UpdateBulletinDataSchema } from "./compositions/HagicodeUpdateBulletin";
+import { defaultData } from "./compositions/example-data";
+import HagicodeUniversalIntro, { DURATION_IN_FRAMES as HAGICODE_UNIVERSAL_INTRO_DURATION } from "./compositions/HagicodeUniversalIntro";
+import { OutroSummaryScene } from "./scenes/intro/OutroSummaryScene";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -160,6 +165,40 @@ export const RemotionRoot: React.FC = () => {
           logoColor1: "#91dAE2" as const,
           logoColor2: "#86A8E7" as const,
         }}
+      />
+
+      {/* Hagicode Update Bulletin - Data-driven update video template */}
+      <Composition
+        id="HagicodeUpdateBulletin"
+        component={HagicodeUpdateBulletin}
+        durationInFrames={calculateDuration(defaultData)}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={UpdateBulletinDataSchema}
+        defaultProps={defaultData}
+      />
+
+      {/* Hagicode Universal Intro - Standardized intro video template */}
+      <Composition
+        id="HagicodeUniversalIntro"
+        component={HagicodeUniversalIntro}
+        durationInFrames={HAGICODE_UNIVERSAL_INTRO_DURATION}
+        fps={60}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/* Hagicode Outro Summary - Reusable outro for other videos */}
+      <Composition
+        id="HagicodeOutroSummary"
+        component={OutroSummaryScene}
+        durationInFrames={120} // 2 seconds @ 60fps
+        fps={60}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
       />
     </>
   );
