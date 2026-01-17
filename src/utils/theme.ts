@@ -1,90 +1,147 @@
-// Enhanced Theme configuration for Hagicode product video
+// Enhanced Theme configuration for Hagicode Update Bulletin
 // Based on UI/UX Pro Max best practices
-// Style: Glassmorphism + Dark Mode (OLED) + AI-Native UI
+// Style: Dark Mode (OLED) + Tech Startup + Soft UI Evolution
 
 export const colors = {
-  // Primary - AI Purple gradient (enhanced for visual impact)
+  // Primary - Blue gradient (Developer Tool standard)
   primary: {
-    from: '#7C3AED', // Enhanced Violet 600
-    to: '#A78BFA',   // Soft Violet 400
-    glow: 'rgba(124, 58, 237, 0.4)',
+    from: '#3B82F6',    // Blue 500 - Tech standard
+    to: '#60A5FA',      // Blue 400 - Lighter variant
+    glow: 'rgba(59, 130, 246, 0.4)',
   },
 
-  // Secondary - Cyan to Blue gradient
+  // Secondary - Purple gradient (AI innovation)
   secondary: {
-    from: '#06b6d4', // Cyan 500
-    to: '#3b82f6',   // Blue 500
-    glow: 'rgba(6, 182, 212, 0.3)',
+    from: '#8B5CF6',    // Violet 500 - AI/Innovation
+    to: '#A78BFA',      // Violet 400
+    glow: 'rgba(139, 92, 246, 0.3)',
   },
 
-  // Accent - For CTAs (enhanced amber)
+  // Accent - Cyan for vibrancy
   accent: {
-    primary: '#f59e0b', // Amber 500
-    glow: 'rgba(245, 158, 11, 0.4)',
+    primary: '#06B6D4', // Cyan 500
+    glow: 'rgba(6, 182, 212, 0.4)',
   },
 
-  // Success state
+  // Aurora gradient colors for special effects
+  aurora: {
+    pink: '#EC4899',   // Pink 500
+    purple: '#A855F7', // Purple 500
+    blue: '#3B82F6',   // Blue 500
+  },
+
+  // Success state (Emerald - better contrast)
   success: {
-    primary: '#10b981', // Emerald 500
+    primary: '#10B981', // Emerald 500
     glow: 'rgba(16, 185, 129, 0.3)',
+  },
+
+  // Warning state (Amber)
+  warning: {
+    primary: '#F59E0B', // Amber 500
+    glow: 'rgba(245, 158, 11, 0.3)',
+  },
+
+  // Error state (Red)
+  error: {
+    primary: '#EF4444', // Red 500
+    glow: 'rgba(239, 68, 68, 0.3)',
   },
 
   // Background colors (OLED-optimized dark mode)
   background: {
-    dark: '#0a0a0a',      // Pure black for OLED
-    medium: '#0f172a',    // Slate 900
-    light: '#1e293b',     // Slate 800
-    glass: 'rgba(30, 41, 59, 0.7)', // Glass effect base
+    dark: '#0F172A',       // Slate 900 - Primary background
+    medium: '#1E293B',     // Slate 800 - Cards/panels
+    light: '#334155',      // Slate 700 - Hover states
+    glass: 'rgba(30, 41, 59, 0.8)', // Glass effect base
     glassLight: 'rgba(255, 255, 255, 0.05)', // Light glass highlight
   },
 
   // Text colors (WCAG AAA compliant)
   text: {
-    primary: '#f1f5f9',   // Slate 100
-    secondary: '#cbd5e1', // Slate 300
-    muted: '#64748b',     // Slate 500
-    accent: '#a78bfa',    // Violet 400
+    primary: '#F1F5F9',    // Slate 100 - Main text
+    secondary: '#CBD5E1',  // Slate 300 - Secondary text
+    muted: '#64748B',      // Slate 500 - Disabled/muted
+    accent: '#60A5FA',     // Blue 400 - Links/highlights
   },
 
-  // Border colors
+  // Border colors (enhanced visibility)
   border: {
     light: 'rgba(255, 255, 255, 0.1)',
     medium: 'rgba(255, 255, 255, 0.15)',
-    accent: 'rgba(124, 58, 237, 0.3)',
+    accent: 'rgba(59, 130, 246, 0.3)', // Blue accent
   },
 
-  // Aurora gradient colors
-  aurora: {
-    purple: '#7C3AED',
-    blue: '#3B82F6',
-    cyan: '#06B6D4',
-    pink: '#EC4899',
+  // Tag colors by category
+  tag: {
+    feature: {
+      bg: 'rgba(59, 130, 246, 0.15)',
+      text: '#60A5FA',
+      border: 'rgba(59, 130, 246, 0.3)',
+      label: '功能',
+    },
+    bugfix: {
+      bg: 'rgba(239, 68, 68, 0.15)',
+      text: '#F87171',
+      border: 'rgba(239, 68, 68, 0.3)',
+      label: '修复',
+    },
+    improvement: {
+      bg: 'rgba(16, 185, 129, 0.15)',
+      text: '#34D399',
+      border: 'rgba(16, 185, 129, 0.3)',
+      label: '改进',
+    },
+    ai: {
+      bg: 'rgba(139, 92, 246, 0.15)',
+      text: '#A78BFA',
+      border: 'rgba(139, 92, 246, 0.3)',
+      label: 'AI',
+    },
+    ui: {
+      bg: 'rgba(236, 72, 153, 0.15)',
+      text: '#F472B6',
+      border: 'rgba(236, 72, 153, 0.3)',
+      label: 'UI',
+    },
+    performance: {
+      bg: 'rgba(245, 158, 11, 0.15)',
+      text: '#FBBF24',
+      border: 'rgba(245, 158, 11, 0.3)',
+      label: '性能',
+    },
+    other: {
+      bg: 'rgba(100, 116, 139, 0.15)',
+      text: '#94A3B8',
+      border: 'rgba(100, 116, 139, 0.3)',
+      label: '其他',
+    },
   },
 };
 
 export const typography = {
-  // Font families - Tech Startup pairing
+  // Font families - AlibabaPuHuiTi-3 (Chinese-optimized) with fallbacks
   fontFamily: {
-    heading: 'Space Grotesk, Inter, system-ui, sans-serif',
-    body: 'DM Sans, Inter, system-ui, sans-serif',
-    mono: 'JetBrains Mono, Fira Code, monospace',
+    heading: '"AlibabaPuHuiTi-3", system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
+    body: '"AlibabaPuHuiTi-3", system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
+    mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, monospace',
   },
 
   // Font sizes (relative to 1080p height)
   fontSize: {
     // Titles
-    hero: '140px',       // Enhanced hero size
-    title: '120px',
-    subtitle: '72px',    // Increased for impact
-    sectionTitle: '56px', // Enhanced section title
+    hero: '120px',
+    title: '100px',
+    subtitle: '64px',
+    sectionTitle: '52px',
 
     // Body
-    bodyLarge: '40px',   // Increased for readability
-    body: '32px',
-    bodySmall: '28px',
+    bodyLarge: '36px',
+    body: '30px',
+    bodySmall: '26px',
 
     // Caption
-    caption: '24px',
+    caption: '22px',
   },
 
   // Font weights
@@ -98,49 +155,50 @@ export const typography = {
   // Line heights for better readability
   lineHeight: {
     tight: 1.1,
-    normal: 1.3,
-    relaxed: 1.5,
+    normal: 1.4,
+    relaxed: 1.6,
   },
 };
 
 export const spacing = {
   // Relative to 1920x1080 canvas
   padding: {
-    page: '100px',      // Increased for breathing room
+    page: '100px',
     section: '80px',
     element: '48px',
   },
 
   gap: {
-    large: '80px',
-    medium: '48px',
-    small: '32px',
+    large: '64px',
+    medium: '40px',
+    small: '24px',
     tiny: '16px',
   },
 };
 
-// Glassmorphism effects
+// Glassmorphism effects (Soft UI Evolution)
 export const glass = {
   // Glass card effect
   card: {
-    background: 'rgba(30, 41, 59, 0.7)',
+    background: 'rgba(30, 41, 59, 0.8)',
     backdropFilter: 'blur(20px)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+    border: '1px solid rgba(255, 255, 255, 0.12)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
   },
 
   // Glass panel (lighter)
   panel: {
-    background: 'rgba(255, 255, 255, 0.05)',
+    background: 'rgba(51, 65, 85, 0.6)',
     backdropFilter: 'blur(12px)',
-    border: '1px solid rgba(255, 255, 255, 0.08)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)',
   },
 };
 
-// Animation easing functions (per UX best practices)
+// Animation easing functions (UX best practices)
 export const easing = {
   // Enter animations - ease-out for smooth entrance
-  enter: [0.16, 1, 0.3, 1], // cubic-bezier
+  enter: [0.16, 1, 0.3, 1],
 
   // Exit animations - ease-in for smooth exit
   exit: [0.4, 0, 1, 1],
@@ -163,8 +221,196 @@ export const duration = {
 
 // Glow effects
 export const glow = {
-  subtle: '0 0 20px rgba(124, 58, 237, 0.3)',
-  medium: '0 0 40px rgba(124, 58, 237, 0.4)',
-  strong: '0 0 60px rgba(124, 58, 237, 0.5)',
+  subtle: '0 0 20px rgba(59, 130, 246, 0.3)',
+  medium: '0 0 40px rgba(59, 130, 246, 0.4)',
+  strong: '0 0 60px rgba(59, 130, 246, 0.5)',
   cyan: '0 0 30px rgba(6, 182, 212, 0.4)',
+  purple: '0 0 30px rgba(139, 92, 246, 0.4)',
+};
+
+// ============================================
+// VIDEO-SPECIFIC TYPOGRAPHY (Mobile Optimized)
+// ============================================
+// Optimized for 1920x1080 canvas, readable on mobile devices
+// Uses larger font sizes with proper spacing for video content
+
+export const videoTypography = {
+  // Safe zone padding (keep content within visible area)
+  safeZone: {
+    horizontal: '80px',  // 4% of 1920px
+    vertical: '60px',     // 5.5% of 1080px
+  },
+
+  // Font family - AlibabaPuHuiTi-3 (Chinese-optimized) with fallbacks
+  fontFamily: {
+    heading: '"AlibabaPuHuiTi-3", system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
+    body: '"AlibabaPuHuiTi-3", system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
+  },
+
+  // Font sizes optimized for video & mobile readability
+  // Based on minimum 48px for body text (16px at 1080p scale)
+  fontSize: {
+    // Hero/Title sizes (60-120px)
+    hero: '140px',        // Main brand/title - dominates screen
+    title: '110px',       // Section titles
+    subtitle: '70px',     // Secondary titles
+
+    // Body text (48-60px minimum for mobile readability)
+    bodyLarge: '60px',    // Primary body text
+    body: '52px',         // Standard body text
+    bodySmall: '44px',    // Supporting text (still readable)
+
+    // UI elements
+    button: '48px',       // Button/call-to-action text
+    caption: '38px',      // Caption/annotation text
+    label: '42px',        // Form labels, small descriptors
+  },
+
+  // Font weights for video (bolder for better readability)
+  fontWeight: {
+    display: 800,         // Hero titles
+    heading: 700,         // Section headings
+    subheading: 600,      // Subtitles
+    body: 500,            // Body text (medium weight for readability)
+    label: 400,           // Labels, captions
+  },
+
+  // Line heights optimized for video
+  lineHeight: {
+    tight: 1.1,           // Hero titles
+    normal: 1.3,          // Body text
+    relaxed: 1.5,         // Multi-line content
+  },
+};
+
+// ============================================
+// VIDEO LAYOUT SYSTEM
+// ============================================
+// Grid and spacing optimized for fixed 1920x1080 canvas
+
+export const videoLayout = {
+  // Canvas dimensions
+  canvas: {
+    width: 1920,
+    height: 1080,
+  },
+
+  // Safe zone padding (keep content within visible area)
+  safeZone: {
+    horizontal: '80px',  // 4% of 1920px
+    vertical: '60px',     // 5.5% of 1080px
+  },
+
+  // Safe content area (excluding safe zones)
+  contentArea: {
+    width: 1760,    // 1920 - 80*2
+    height: 960,    // 1080 - 60*2
+  },
+
+  // Grid system for video layouts
+  grid: {
+    columns: 12,
+    gap: '40px',
+    maxWidth: '1600px', // Keep content centered and contained
+  },
+
+  // Section spacing
+  section: {
+    verticalGap: '80px',
+    horizontalGap: '60px',
+  },
+
+  // Component-specific sizes
+  component: {
+    cardMinWidth: '400px',
+    cardMaxWidth: '500px',
+    buttonMinHeight: '80px',
+    buttonMinWidth: '200px',
+  },
+
+  // Maximum line length for readability
+  maxLineLength: {
+    body: '1200px',    // ~60 characters at 52px
+    title: '1400px',   // ~14 characters at 110px
+  },
+};
+
+// ============================================
+// VIDEO ANIMATION SYSTEM
+// ============================================
+// Optimized easing and durations for 60fps video
+
+export const videoAnimation = {
+  // Easing functions optimized for video smoothness
+  easing: {
+    // Smooth enter (ease-out)
+    enter: [0.16, 1, 0.3, 1],
+
+    // Smooth exit (ease-in)
+    exit: [0.4, 0, 1, 1],
+
+    // Emphatic bounce
+    bounce: [0.34, 1.56, 0.64, 1],
+
+    // Natural movement
+    smooth: [0.25, 0.1, 0.25, 1],
+
+    // Quick snappy
+    snappy: [0.18, 0.9, 0.32, 1],
+
+    // Slow dramatic
+    dramatic: [0.7, 0, 0.3, 1],
+  },
+
+  // Duration presets (in frames at 60fps)
+  duration: {
+    instant: 0,
+    snappy: 6,        // 100ms - Quick UI feedback
+    fast: 12,          // 200ms - Standard UI
+    normal: 18,        // 300ms - Smooth transitions
+    slow: 30,          // 500ms - Emphasized animations
+    slower: 48,        // 800ms - Dramatic reveals
+    crawl: 72,         // 1.2s - Very slow animations
+  },
+
+  // Delays for staggered animations
+  stagger: {
+    instant: 0,
+    tight: 3,          // 50ms between elements
+    normal: 6,         // 100ms between elements
+    relaxed: 10,       // 166ms between elements
+    slow: 15,          // 250ms between elements
+  },
+};
+
+// ============================================
+// MOBILE-FIRST VIDEO CONSTRAINTS
+// ============================================
+// Rules to ensure content is readable on all devices
+
+export const mobileConstraints = {
+  // Minimum font sizes (scaled to 1920x1080)
+  minFontSize: {
+    body: '48px',      // Minimum for readable body text
+    title: '64px',     // Minimum for titles
+    subtitle: '52px',  // Minimum for subtitles
+  },
+
+  // Maximum line length for readability
+  maxLineLength: {
+    body: '1200px',    // ~60 characters at 52px
+    title: '1400px',   // ~14 characters at 110px
+  },
+
+  // Touch target sizes (for any interactive elements)
+  minTouchTarget: {
+    size: '80px',      // 44px minimum at mobile scale
+  },
+
+  // Spacing to prevent overflow
+  minPadding: {
+    container: '40px',
+    card: '32px',
+    button: '24px',
+  },
 };
