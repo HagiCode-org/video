@@ -1,0 +1,25 @@
+# Hagicode 更新简报 - 简单示例
+# 这是一个最小化的示例数据文件，用于快速测试
+
+# 版本号
+version: v1.0.0
+
+# 发布日期
+releaseDate: 2026-01-18
+
+# 版本摘要 (可选)
+summary: 这是一个简单的示例版本
+
+# 重点修改项列表
+highlights:
+  - id: feature-1
+    title: 新功能示例
+    description: 这是一个新功能的详细描述
+    tags:
+      - feature
+
+# 次要修改项列表
+minorItems:
+  - category: bugfix
+    title: 修复问题
+    description: 修复了一个已知问题

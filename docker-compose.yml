@@ -1,0 +1,49 @@
+version: "3.8"
+
+# Hagicode Video Renderer - Docker Compose Configuration
+# This file provides an alternative way to run the Docker container with simplified commands
+
+services:
+  renderer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hagicode-renderer:latest
+    working_dir: /workspace
+    # Mount the current directory to /workspace in the container
+    # This allows the container to access YAML configs and write output videos
+    volumes:
+      - ./:/workspace
+
+    # Resource limits (optional, uncomment to enable)
+    # These settings prevent the renderer from using all system resources
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '4.0'      # Maximum CPU cores
+    #       memory: 8G       # Maximum memory
+    #     reservations:
+    #       cpus: '2.0'      # Reserved CPU cores
+    #       memory: 4G       # Reserved memory
+
+    # Environment variables (if needed)
+    # environment:
+    #   - NODE_ENV=production
+    #   - REMOTION_VERBOSE=true
+
+# Usage examples:
+#
+# 1. Build the image:
+#    docker-compose build
+#
+# 2. Render a video (using the entrypoint):
+#    docker-compose run renderer data.yaml
+#
+# 3. Render with custom output:
+#    docker-compose run renderer data.yaml --output out/video.mp4
+#
+# 4. Render with verbose logging:
+#    docker-compose run renderer data.yaml --verbose
+#
+# 5. Run with resource limits (uncomment deploy section above):
+#    docker-compose run --deploy-replica-max_cpus=4.0 renderer data.yaml

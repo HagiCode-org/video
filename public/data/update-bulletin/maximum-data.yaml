@@ -1,0 +1,62 @@
+version: 0.1.0-alpha.6
+releaseDate: 2026-01-17
+summary: Docker 配置优化、环境检测与 UI 改进
+highlights:
+  - id: github-issues-integration
+    title: GitHub Issues 集成
+    description: 支持 GitHub OAuth 登录，可将提案内容同步为 GitHub Issues，通过 metadata 字段管理同步状态
+    tags:
+      - feature
+  - id: sdd-initialization-check
+    title: SDD 初始化检查机制
+    description: 新建项目时自动检测 SDD 模板初始化状态，创建提案会话前验证 SDD 是否已初始化
+    tags:
+      - feature
+  - id: container-environment-detection
+    title: 容器环境检测与 VS Code 功能适配
+    description: 后端检测容器环境并提供 SystemInfo API，前端根据环境条件渲染"在 VS Code 中打开"功能
+    tags:
+      - feature
+minorItems:
+  - category: bugfix
+    title: 会话列表折叠展开状态视觉统一
+    description: 统一边框灯效和数字颜色，确保折叠状态与展开状态显示一致
+  - category: improvement
+    title: 优化 Docker 配置文件复制逻辑
+    description: 仅复制核心配置文件 .claude/settings.json 和 .claude.json，减少容器体积
+  - category: improvement
+    title: 扩展只读模式工具调用权限
+    description: 允许在只读模式下使用 ls、tree、git log 等安全只读命令
+  - category: improvement
+    title: OpenSpec 提案操作验证与 UI 统一
+    description: 将黑屏弹窗改造为 shadcn/ui Dialog，添加状态转换前置验证 API
+  - category: improvement
+    title: OpenSpec 提案名称校正功能
+    description: 支持选择已有名称或输入自定义名称来校正 AI 生成的错误提案名称
+  - category: improvement
+    title: 项目创建路径实时校验
+    description: 输入项目路径时实时验证目录是否存在及是否为空，显示警告提示
+  - category: improvement
+    title: 成就通知一次性显示机制
+    description: 使用 localStorage 记录已查看的成就 ID，避免重复通知
+  - category: improvement
+    title: 前端显示完整预发布版本号
+    description: 修复版本信息缺少预发布标识（如 alpha.01）的问题
+  - category: improvement
+    title: 效率分数自动定时刷新
+    description: 每 5 分钟自动刷新效率分数，无需手动操作
+  - category: improvement
+    title: 会话状态图表多语言支持
+    description: 为会话状态分布图表添加中英文翻译支持
+  - category: improvement
+    title: 提案会话信息页回到顶部按钮
+    description: 添加浮动按钮支持平滑滚动返回页面顶部
+  - category: improvement
+    title: Token 使用趋势折线图可视化
+    description: 在 Token 报告中添加折线图展示最近 30 分钟的使用趋势
+  - category: improvement
+    title: 会话右键菜单消息发送框
+    description: 在右键菜单中添加快速消息发送框，支持编辑模式切换
+  - category: improvement
+    title: 调整 Token 速率档位配置
+    description: 第三档调整为 300K，第四档调整为 500K，第五档调整为 1M tokens/分钟
