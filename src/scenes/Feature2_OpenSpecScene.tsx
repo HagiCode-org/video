@@ -93,7 +93,6 @@ export const Feature2_OpenSpecScene: React.FC = () => {
         style={{
           fontSize: '56px',
           fontWeight: 700,
-          fontFamily: 'Space Grotesk, Inter, sans-serif',
           background: `linear-gradient(135deg, ${colors.primary.from}, ${colors.secondary.to})`,
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',

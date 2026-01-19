@@ -22,7 +22,6 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
   const effectiveFrame = Math.max(0, frame - delay);
 
   const baseStyle: React.CSSProperties = {
-    fontFamily: 'Space Grotesk, Inter, sans-serif',
     ...style,
   };
 

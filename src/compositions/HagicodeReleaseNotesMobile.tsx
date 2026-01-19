@@ -89,6 +89,7 @@ export const HagicodeReleaseNotesMobile: React.FC<UpdateBulletinData> = (data) =
                   index={index}
                   total={data.highlights.length}
                   delay={0}
+                  isMobile={true}
                 />
               </Series.Sequence>
             ))}

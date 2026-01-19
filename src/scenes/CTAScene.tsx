@@ -107,7 +107,6 @@ export const CTAScene: React.FC = () => {
           style={{
             fontSize: '48px',
             fontWeight: 700,
-            fontFamily: 'Space Grotesk, Inter, sans-serif',
             background: `linear-gradient(135deg, ${colors.primary.from}, ${colors.primary.to})`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -186,7 +185,6 @@ export const CTAScene: React.FC = () => {
                 style={{
                   fontSize: '26px',
                   fontWeight: 700,
-                  fontFamily: 'Space Grotesk, Inter, sans-serif',
                   color: colors.text.primary,
                   letterSpacing: '0.5px',
                 }}
@@ -307,7 +305,6 @@ export const CTAScene: React.FC = () => {
                 style={{
                   fontSize: '24px',
                   fontWeight: 700,
-                  fontFamily: 'Space Grotesk, Inter, sans-serif',
                   background: `linear-gradient(135deg, ${colors.primary.from}, ${colors.primary.to})`,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',

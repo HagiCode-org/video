@@ -170,7 +170,6 @@ export const SmartScene: React.FC = () => {
           style={{
             fontSize: '64px',
             fontWeight: 700,
-            fontFamily: 'Space Grotesk, Inter, sans-serif',
             background: THEME.gradient,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',

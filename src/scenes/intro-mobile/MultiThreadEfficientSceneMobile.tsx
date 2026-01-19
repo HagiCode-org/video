@@ -9,12 +9,14 @@ export interface MultiThreadEfficientSceneMobileProps {
   delay?: number;
 }
 
+const heighPercent = 150; // Height unit for bars
+
 const BARS = [
-  { label: '1x', height: 80, name: 'VibeCoding' },
-  { label: '2x', height: 150, name: '' },
-  { label: '3x', height: 220, name: '' },
-  { label: '4x', height: 290, name: '' },
-  { label: '5x', height: 360, name: 'HagiCode' },
+  { label: '1x', height: heighPercent, name: 'VibeCoding' },
+  { label: '2x', height: heighPercent * 2, name: '' },
+  { label: '3x', height: heighPercent * 3, name: '' },
+  { label: '4x', height: heighPercent * 4, name: '' },
+  { label: '5x', height: heighPercent * 5, name: 'HagiCode' },
 ];
 
 /**
@@ -61,7 +63,7 @@ export const MultiThreadEfficientSceneMobile: React.FC<MultiThreadEfficientScene
 
   return (
     <SceneLayoutMobile
-      title="HagiCode 发挥最大效率"
+      title="发挥 AI 最大效率"
       titleOpacity={titleOpacity}
       titleScale={titleScale}
     >
@@ -95,7 +97,7 @@ export const MultiThreadEfficientSceneMobile: React.FC<MultiThreadEfficientScene
             extrapolateRight: 'clamp',
           });
 
-          // Name label below bar
+          // Name label above bar
           const nameOpacity = interpolate(barProgress, [0.6, 0.9], [0, 1], {
             extrapolateRight: 'clamp',
           });
@@ -201,7 +203,7 @@ export const MultiThreadEfficientSceneMobile: React.FC<MultiThreadEfficientScene
             style={{
               position: 'absolute',
               right: '18px',
-              bottom: `${650 + 50}px`, // Bar height + spacing for name
+              bottom: `${950 + 50}px`, // Bar height + spacing for name
               fontSize: mobileVideoTypography.fontSize.hero,
               fontWeight: mobileVideoTypography.fontWeight.display,
               color: colors.primary.from,

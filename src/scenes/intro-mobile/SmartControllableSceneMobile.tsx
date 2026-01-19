@@ -76,7 +76,7 @@ export const SmartControllableSceneMobile: React.FC<SmartControllableSceneMobile
 
   return (
     <SceneLayoutMobile
-      title="HagiCode 引导 AI 更加智能"
+      title="引导 AI 更加智能"
       titleOpacity={titleOpacity}
       titleScale={titleScale}
     >
@@ -124,10 +124,11 @@ export const SmartControllableSceneMobile: React.FC<SmartControllableSceneMobile
               style={{
                 position: 'relative',
                 width: '100%',
-                height: '100px', // 进一步减小卡片高度，从 110px → 100px
+                height: '150px', // 进一步减小卡片高度，从 110px → 100px
                 perspective: '1200px',
                 opacity: cardEntrance,
                 transform: `translateY(${cardSlideUp}px)`,
+                top: '200px',
               }}
             >
               <div

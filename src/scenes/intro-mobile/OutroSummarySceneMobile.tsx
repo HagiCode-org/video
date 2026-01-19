@@ -23,6 +23,11 @@ const FEATURES = [
  * - 增强卡片视觉对比度和层次
  * - 优化 CTA 按钮的视觉冲击力
  * - 更清晰的垂直节奏
+ *
+ * Layout optimizations for mobile vertical video (golden zone):
+ * - Content positioned in central 60% of screen (golden zone)
+ * - Top margin of 280px shifts content to center
+ * - GitHub URL with nowrap to prevent text wrapping
  */
 export const OutroSummarySceneMobile: React.FC<OutroSummarySceneMobileProps> = ({ delay = 0 }) => {
   const frame = useCurrentFrame();
@@ -57,10 +62,13 @@ export const OutroSummarySceneMobile: React.FC<OutroSummarySceneMobileProps> = (
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start', // 改为 flex-start，配合顶部间距控制整体位置
         padding: `${mobileVideoLayout.safeZone.vertical}px ${mobileVideoLayout.safeZone.horizontal}px`,
       }}
     >
+      {/* 顶部间距容器 - 将整体内容下移至屏幕中央黄金区域 */}
+      <div style={{ height: '280px' }} /> {/* 约屏幕高度的 15%，将内容下移 */}
+
       {/* Logo/Brand name */}
       <div
         style={{
@@ -91,7 +99,7 @@ export const OutroSummarySceneMobile: React.FC<OutroSummarySceneMobileProps> = (
           opacity: interpolate(entranceProgress, [0.3, 0.7], [0, 1], {
             extrapolateRight: 'clamp',
           }),
-          marginBottom: '40px',
+          marginBottom: '32px', // 从 40px 调整为 32px，与标题间距保持一致
         }}
       >
         让你可以同时处理十个需求
@@ -227,6 +235,7 @@ export const OutroSummarySceneMobile: React.FC<OutroSummarySceneMobileProps> = (
             fontSize: mobileVideoTypography.fontSize.button,
             fontWeight: 700, // 更粗
             color: colors.accent.primary,
+            whiteSpace: 'nowrap', // 防止 URL 文本换行
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

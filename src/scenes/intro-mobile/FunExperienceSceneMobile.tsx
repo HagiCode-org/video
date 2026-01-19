@@ -42,7 +42,7 @@ export const FunExperienceSceneMobile: React.FC<FunExperienceSceneMobileProps> =
 
   return (
     <SceneLayoutMobile
-      title="HagiCode 让编程更加有趣"
+      title="让编程更加有趣"
       titleOpacity={titleOpacity}
       titleScale={titleScale}
     >
@@ -54,6 +54,8 @@ export const FunExperienceSceneMobile: React.FC<FunExperienceSceneMobileProps> =
           gap: '16px', // 减小间距，从 20px → 16px
           width: '100%',
           maxWidth: '840px',
+          position: 'relative',
+          top: '120px',
         }}
       >
         {FEATURES.map((feature, index) => {

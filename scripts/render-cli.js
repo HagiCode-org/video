@@ -255,6 +255,11 @@ async function renderVideo(dataFilePath, options) {
       console.log(chalk.green('✓ Main video rendered successfully'));
       console.log(chalk.gray(`  Output: ${options.outputPath}`));
 
+      // Determine header and tail video paths based on composition
+      const isMobile = config.compositionId === 'HagicodeReleaseNotesMobile';
+      const headerPath = isMobile ? 'public/video/header_mobile.mp4' : 'public/video/header.mp4';
+      const tailPath = isMobile ? 'public/video/tail_mobile.mp4' : 'public/video/tail.mp4';
+
       // Step 2: FFmpeg post-processing (concatenation and audio)
       if (!options.skipAudio) {
         console.log();
@@ -266,6 +271,8 @@ async function renderVideo(dataFilePath, options) {
 
         try {
           const finalOutput = await processVideo(options.outputPath, options.outputPath, {
+            headerPath,
+            tailPath,
             verbose: options.verbose,
           });
 

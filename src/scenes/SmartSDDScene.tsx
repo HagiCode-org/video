@@ -140,7 +140,6 @@ export const SmartSDDScene: React.FC = () => {
           style={{
             fontSize: '52px',
             fontWeight: 700,
-            fontFamily: 'Space Grotesk, Inter, sans-serif',
             background: `linear-gradient(135deg, ${colors.primary.from}, ${colors.primary.to})`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -324,7 +323,6 @@ export const SmartSDDScene: React.FC = () => {
                 style={{
                   fontSize: '72px',
                   fontWeight: 700,
-                  fontFamily: 'Space Grotesk, Inter, sans-serif',
                   background: `linear-gradient(135deg, ${colors.success.primary}, ${colors.accent.primary})`,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',

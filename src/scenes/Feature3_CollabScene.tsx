@@ -108,7 +108,6 @@ export const Feature3_CollabScene: React.FC = () => {
         style={{
           fontSize: '56px',
           fontWeight: 700,
-          fontFamily: 'Space Grotesk, Inter, sans-serif',
           background: `linear-gradient(135deg, ${colors.secondary.from}, ${colors.secondary.to})`,
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',

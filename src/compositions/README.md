@@ -4,6 +4,22 @@
 
 ## 概述
 
+本项目提供两个视频组合，适配不同的发布平台：
+
+### HagicodeReleaseNotesMobile（移动端 - 默认）
+- **分辨率**: 1080x1920（竖屏 9:16）
+- **帧率**: 60fps
+- **目标平台**: 抖音、B站、小红书等移动端短视频平台
+- **特点**: 移动端优先，竖屏体验更佳
+
+### HagicodeUpdateBulletin（桌面端）
+- **分辨率**: 1920x1080（横屏 16:9）
+- **帧率**: 30fps
+- **目标平台**: YouTube、B站桌面端等横屏平台
+- **特点**: 传统横屏格式
+
+**默认行为**: Docker 容器和 CLI 渲染默认使用移动端组合（`HagicodeReleaseNotesMobile`）。可通过 `--composition HagicodeUpdateBulletin` 参数切换到桌面端。
+
 `HagicodeUpdateBulletin` 是一个基于 Remotion 的视频模板，通过结构化数据自动生成产品更新简报视频。适用于版本发布通知、开发进度汇报等功能场景。
 
 ## 数据格式
@@ -203,10 +219,21 @@ minorItems:
 # 启动开发服务器
 npm run dev
 
-# 在 Remotion Studio 中选择 HagicodeUpdateBulletin 组合
+# 在 Remotion Studio 中选择对应的组合
+# - HagicodeReleaseNotesMobile: 移动端竖屏 (1080x1920 @ 60fps) - 默认
+# - HagicodeUpdateBulletin: 桌面端横屏 (1920x1080 @ 30fps)
 
-# 渲染视频
+# 渲染移动端视频（默认）
+npm run build HagicodeReleaseNotesMobile
+
+# 或使用 CLI（默认为移动端）
+node scripts/render-cli.js public/data/update-bulletin/example-data.yaml
+
+# 渲染桌面端视频
 npm run build HagicodeUpdateBulletin
+
+# 或使用 CLI 指定组合
+node scripts/render-cli.js public/data/update-bulletin/example-data.yaml --composition HagicodeUpdateBulletin
 ```
 
 ## 截图处理

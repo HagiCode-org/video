@@ -105,7 +105,6 @@ export const HighlightsPage: React.FC<HighlightsPageProps> = ({ items, pageIndex
               fontWeight: '700',
               color: '#f8fafc',
               margin: 0,
-              fontFamily: 'system-ui, -apple-system, sans-serif',
             }}
           >
             重要更新
@@ -225,7 +224,6 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ item, index }) => {
             fontWeight: '600',
             color: '#f1f5f9',
             margin: 0,
-            fontFamily: 'system-ui, -apple-system, sans-serif',
             flex: 1,
             lineHeight: '1.3',
           }}
@@ -248,7 +246,6 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ item, index }) => {
                     background: tagStyle.bg,
                     color: tagStyle.text,
                     border: `1px solid ${tagStyle.border}`,
-                    fontFamily: 'system-ui, -apple-system, sans-serif',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -267,7 +264,6 @@ const HighlightCard: React.FC<HighlightCardProps> = ({ item, index }) => {
           color: '#cbd5e1',
           margin: 0,
           lineHeight: '1.6',
-          fontFamily: 'system-ui, -apple-system, sans-serif',
           flex: 1,
         }}
       >

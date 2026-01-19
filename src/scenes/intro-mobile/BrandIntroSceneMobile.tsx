@@ -182,6 +182,7 @@ export const BrandIntroSceneMobile: React.FC<BrandIntroSceneMobileProps> = ({ de
             fontWeight: 700, // 更粗的字体
             color: colors.accent.primary,
             letterSpacing: '1px',
+            whiteSpace: 'nowrap', // 防止 URL 文本换行
             boxShadow: `0 0 40px ${colors.accent.glow}50, 0 8px 32px ${colors.accent.primary}30`, // 增强阴影
           }}
         >

@@ -107,7 +107,6 @@ export const HookScene: React.FC = () => {
               style={{
                 fontSize: '36px',
                 fontWeight: 700,
-                fontFamily: 'Space Grotesk, Inter, sans-serif',
                 color: colors.text.primary,
                 textAlign: 'center',
                 lineHeight: 1.3,
@@ -232,7 +231,6 @@ export const HookScene: React.FC = () => {
                     style={{
                       fontSize: '36px',
                       fontWeight: 700,
-                      fontFamily: 'Space Grotesk, Inter, sans-serif',
                       color: isHighlighted ? point.color : colors.text.primary,
                       textAlign: 'center',
                       lineHeight: 1.2,

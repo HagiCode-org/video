@@ -73,12 +73,11 @@ function validatePath(filePath) {
 function detectCompositionId(data) {
   // Check if data matches UpdateBulletin schema structure
   if (data.version && data.releaseDate) {
-    return 'HagicodeUpdateBulletin';
+    return 'HagicodeReleaseNotesMobile'; // Mobile-first default for vertical video platforms
   }
 
-  // Default to HagicodeUpdateBulletin for now
-  // In future, can add more composition detection logic
-  return 'HagicodeUpdateBulletin';
+  // Default to mobile version for vertical video platforms (抖音, B站, 小红书)
+  return 'HagicodeReleaseNotesMobile';
 }
 
 /**
@@ -89,7 +88,8 @@ function detectCompositionId(data) {
  * @throws {ConfigLoadError} If validation fails
  */
 function validateDataSchema(data, compositionId) {
-  if (compositionId === 'HagicodeUpdateBulletin') {
+  // Both HagicodeUpdateBulletin and HagicodeReleaseNotesMobile use the same schema
+  if (compositionId === 'HagicodeUpdateBulletin' || compositionId === 'HagicodeReleaseNotesMobile') {
     // Basic validation for UpdateBulletin
     if (!data.version) {
       throw new ConfigLoadError(

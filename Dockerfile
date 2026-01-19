@@ -1,11 +1,15 @@
-# Hagicode Video Renderer - Docker Image
-# This Dockerfile creates a containerized environment for Remotion video rendering
-# Base image: Node.js 20 LTS on Debian with Huawei Cloud mirrors for China
+# Hagicode Video Renderer - Base Docker Image
+# This Dockerfile creates the base image with all dependencies but NO source code
+# Source code will be added in a separate lightweight image layer
+#
+# Usage:
+#   docker build --target base -t hagicode-renderer:base .
+#   docker build -t hagicode-renderer:latest .
 
 # ========== Base Image ==========
 # Using Node.js 20 LTS on Debian Bullseye (full, not slim) for better font support
 # Full Debian image includes more fonts and better emoji support
-FROM node:20-bullseye
+FROM node:20-bullseye AS base
 
 # Set working directory
 WORKDIR /workspace
@@ -66,13 +70,8 @@ RUN npx remotion browser ensure
 # Reset npm registry to default (optional, for consistency)
 RUN npm config set registry https://registry.npmjs.org
 
-# ========== Source Code ==========
-# Copy project source code
-# Note: .dockerignore excludes unnecessary files (including node_modules)
-COPY . .
-
 # ========== Entrypoint Script ==========
-# Copy and configure the entrypoint script
+# Copy and configure the entrypoint script (this is part of base, won't change)
 COPY docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 RUN chmod +x /usr/local/bin/docker_entrypoint.sh
 
@@ -91,3 +90,16 @@ ENTRYPOINT ["/usr/local/bin/docker_entrypoint.sh"]
 
 # Default working directory
 WORKDIR /workspace
+
+# ========== Final Stage ==========
+# This stage adds the source code on top of the base image
+# Source code changes will only rebuild this lightweight layer
+FROM base
+
+# Copy project source code
+# Note: .dockerignore excludes unnecessary files (including node_modules)
+COPY . .
+
+# Label this as the final image
+LABEL org.opencontainers.image.title="Hagicode Video Renderer"
+LABEL org.opencontainers.image.description="Remotion-based video renderer for update bulletins"

@@ -124,7 +124,7 @@ export const typography = {
   fontFamily: {
     heading: '"AlibabaPuHuiTi-3", system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
     body: '"AlibabaPuHuiTi-3", system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif',
-    mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, monospace',
+    mono: '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace',
   },
 
   // Font sizes (relative to 1080p height)

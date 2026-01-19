@@ -114,7 +114,6 @@ export const AdvantagesScene: React.FC = () => {
           style={{
             fontSize: '48px',
             fontWeight: 700,
-            fontFamily: 'Space Grotesk, Inter, sans-serif',
             background: `linear-gradient(135deg, ${colors.primary.from}, ${colors.primary.to})`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',

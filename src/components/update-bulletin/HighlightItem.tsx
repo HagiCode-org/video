@@ -1,7 +1,7 @@
 // HighlightItem component - Display a highlighted update item with enhanced animations
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame, interpolate, spring, Easing, Img, staticFile } from 'remotion';
-import { colors, typography, glass } from '../../utils/theme';
+import { colors, typography, glass, mobileVideoTypography, mobileVideoLayout } from '../../utils/theme';
 import type { HighlightItem as HighlightItemType } from '../../compositions/schema';
 
 export interface HighlightItemProps {
@@ -9,6 +9,7 @@ export interface HighlightItemProps {
   index: number;
   total: number;
   delay?: number;
+  isMobile?: boolean;
 }
 
 // Tag colors based on category - using theme colors
@@ -94,21 +95,45 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
   index,
   total,
   delay = 0,
+  isMobile = false,
 }) => {
   const frame = useCurrentFrame();
   const effectiveFrame = frame - delay;
+  const hasScreenshot = !!item.screenshot;
+
+  // ========== CONFIGURATION SELECTION ==========
+  // Select appropriate typography and layout based on mobile/desktop mode
+  const config = isMobile ? {
+    typography: mobileVideoTypography,
+    layout: mobileVideoLayout,
+    fps: 60 as const,
+    canvasWidth: 1080,
+    canvasHeight: 1920,
+    cardWidth: hasScreenshot ? 860 : 800,
+    cardPadding: hasScreenshot ? '40px' : '48px',
+    containerPadding: `${mobileVideoLayout.safeZone.vertical}px ${mobileVideoLayout.safeZone.horizontal}px`,
+    counterPosition: { top: '80px', right: '60px' },
+    screenshotMaxHeight: '600px',
+    scanlineRange: [-100, 1000] as [number, number],
+    springMultiplier: 2 as const,
+  } : {
+    typography: typography,
+    layout: null,
+    fps: 30 as const,
+    canvasWidth: 1920,
+    canvasHeight: 1080,
+    cardWidth: hasScreenshot ? 1400 : 1200,
+    cardPadding: hasScreenshot ? '60px' : '80px',
+    containerPadding: '100px',
+    counterPosition: { top: '80px', right: '100px' },
+    screenshotMaxHeight: '500px',
+    scanlineRange: [-100, 600] as [number, number],
+    springMultiplier: 1 as const,
+  };
 
   // ========== CARD ENTRANCE ==========
-  // Smooth spring animation for card entrance
-  const cardSpring = spring({
-    frame: effectiveFrame,
-    fps: 30,
-    config: {
-      damping: 12,
-      stiffness: 80,
-      mass: 0.6,
-    },
-  });
+  // Skip entrance animation - display immediately
+  const cardSpring = 1;
 
   const cardX = interpolate(cardSpring, [0, 1], [500, 0], {
     easing: Easing.out(Easing.cubic),
@@ -120,7 +145,7 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
   // Slow shifting gradient background
   const gradientShift = interpolate(
     effectiveFrame,
-    [0, 150],
+    [0, 150 * config.springMultiplier],
     [0, 360],
     { extrapolateRight: 'clamp' }
   );
@@ -129,28 +154,24 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
 
   // ========== PROGRESS INDICATOR ==========
   // Progress bar at bottom showing current position
-  const progressWidth = interpolate(effectiveFrame, [0, 120], [0, 100], {
+  const progressWidth = interpolate(effectiveFrame, [0, 120 * config.springMultiplier], [0, 100], {
     extrapolateRight: 'clamp',
   });
 
-  const progressOpacity = interpolate(effectiveFrame, [0, 15], [0, 1], {
+  const progressOpacity = interpolate(effectiveFrame, [0, 15 * config.springMultiplier], [0, 1], {
     extrapolateRight: 'clamp',
   });
 
   // ========== COUNTER DISPLAY ==========
   // Show current highlight number (e.g., "01 / 03")
-  const counterOpacity = interpolate(effectiveFrame, [10, 30], [0, 1]);
-  const counterScale = interpolate(effectiveFrame, [10, 35], [0.5, 1], {
+  const counterOpacity = interpolate(effectiveFrame, [10 * config.springMultiplier, 30 * config.springMultiplier], [0, 1]);
+  const counterScale = interpolate(effectiveFrame, [10 * config.springMultiplier, 35 * config.springMultiplier], [0.5, 1], {
     extrapolateRight: 'clamp',
   });
 
   // ========== CONTENT ENTRANCE (ALL TOGETHER) ==========
-  // All content elements animate together
-  const contentSpring = spring({
-    frame: effectiveFrame - 20,
-    fps: 30,
-    config: { damping: 15, stiffness: 90 },
-  });
+  // Skip entrance animation - display immediately
+  const contentSpring = 1;
 
   const contentOpacity = interpolate(contentSpring, [0, 0.5, 1], [0, 0, 1]);
   const contentY = interpolate(contentSpring, [0, 1], [40, 0]);
@@ -162,7 +183,7 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
     // Subtle pulse animation after entrance
     const pulse = interpolate(
       effectiveFrame,
-      [50, 70, 90],
+      [50 * config.springMultiplier, 70 * config.springMultiplier, 90 * config.springMultiplier],
       [1, 1.05, 1],
       { extrapolateRight: 'clamp', easing: Easing.sin }
     );
@@ -170,18 +191,14 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
   };
 
   // ========== SCREENSHOT WITH GLOW ==========
-  const screenshotOpacity = interpolate(effectiveFrame, [40, 65], [0, 1], {
-    extrapolateRight: 'clamp',
-  });
-  const screenshotScale = interpolate(effectiveFrame, [40, 75], [0.9, 1], {
-    extrapolateRight: 'clamp',
-    easing: Easing.out(Easing.back),
-  });
+  // Skip entrance animation - display immediately
+  const screenshotOpacity = 1;
+  const screenshotScale = 1;
 
   // Intensifying glow effect
   const glowIntensity = interpolate(
     effectiveFrame,
-    [50, 150],
+    [50 * config.springMultiplier, 150 * config.springMultiplier],
     [0.5, 1],
     { extrapolateRight: 'clamp', easing: Easing.sin }
   );
@@ -189,26 +206,66 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
   // Secondary glow pulse
   const secondaryGlow = interpolate(
     effectiveFrame,
-    [50, 90, 130],
+    [50 * config.springMultiplier, 90 * config.springMultiplier, 130 * config.springMultiplier],
     [0, 1, 0],
     { extrapolateRight: 'clamp' }
   );
 
-  const hasScreenshot = !!item.screenshot;
   const tags = item.tags || [];
+
+  // ========== SCREENSHOT SHOWCASE MODE ==========
+  // For items with screenshots: in last 2 seconds, screenshot floats out and expands to fullscreen
+  // Timeline:
+  //   0-180 frames (0-3 sec): Normal content display with screenshot in card
+  //   180-210 frames (3-3.5 sec): Screenshot floats out from card
+  //   210-300 frames (3.5-5 sec): Screenshot displayed fullscreen, card fades out
+
+  // IMPORTANT: Don't multiply by springMultiplier here, because effectiveFrame
+  // is already the actual frame number (not scaled)
+  const showcaseStartFrame = 180; // Fixed at 180 frames (3 seconds)
+  const showcaseTransitionDuration = 30; // Fixed at 30 frames (0.5 seconds)
+  const isShowcaseMode = hasScreenshot && effectiveFrame >= showcaseStartFrame;
+
+  // Transition progress (0 = normal mode, 1 = full showcase mode)
+  const showcaseProgress = interpolate(
+    effectiveFrame,
+    [showcaseStartFrame, showcaseStartFrame + showcaseTransitionDuration],
+    [0, 1],
+    { extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic) }
+  );
+
+  // Card and content fade out
+  const cardOpacityInShowcase = interpolate(showcaseProgress, [0, 0.2, 1], [1, 1, 0]);
+  const detailsOpacityInShowcase = interpolate(showcaseProgress, [0, 0.2, 1], [1, 1, 0]);
+  const uiOpacityInShowcase = interpolate(showcaseProgress, [0, 0.2, 1], [1, 1, 0]);
+
+  // Screenshot: float to center and expand to fullscreen
+  // Position: from relative in card to absolute center of screen
+  const screenshotZIndex = interpolate(showcaseProgress, [0, 1], [1, 100]);
+
+  // Fullscreen screenshot width - use canvas width as the base
+  const fullscreenWidth = config.canvasWidth; // 1080px for mobile, 1920px for desktop
+  const cardWidth = config.cardWidth; // 860px for mobile with screenshot
+
+  // Width interpolation: from card width to fullscreen width
+  const currentWidth = interpolate(showcaseProgress, [0, 1], [cardWidth, fullscreenWidth]);
+
+  // Fullscreen max height - use most of screen height (leave some margin)
+  const fullscreenMaxHeight = isMobile ? 1700 : 900; // Leave margin for title etc
+  const currentMaxHeight = interpolate(showcaseProgress, [0, 1], [parseInt(config.screenshotMaxHeight), fullscreenMaxHeight]);
 
   // Generate particles for background
   const particles = React.useMemo(() => {
     const particleCount = 8;
     return Array.from({ length: particleCount }, (_, i) => ({
-      delay: i * 15,
-      duration: 100 + Math.random() * 50,
+      delay: i * 15 * config.springMultiplier,
+      duration: (100 + Math.random() * 50) * config.springMultiplier,
       size: 4 + Math.random() * 8,
-      x: Math.random() * 1920,
-      y: 900 + Math.random() * 180,
+      x: Math.random() * config.canvasWidth,
+      y: (config.canvasHeight * 0.8) + Math.random() * (config.canvasHeight * 0.1),
       opacity: 0.3 + Math.random() * 0.4,
     }));
-  }, []);
+  }, [config.canvasWidth, config.canvasHeight, config.springMultiplier]);
 
   return (
     <AbsoluteFill
@@ -218,8 +275,8 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '100px',
-        overflow: 'hidden',
+        padding: config.containerPadding,
+        overflow: isShowcaseMode ? 'visible' : 'hidden',
       }}
     >
       {/* Animated background gradient overlay */}
@@ -228,7 +285,7 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
           position: 'absolute',
           inset: 0,
           background: `radial-gradient(ellipse at 50% 50%, ${colors.primary.glow.replace('0.4', '0.15')} 0%, transparent 50%)`,
-          opacity: interpolate(effectiveFrame, [0, 60], [0, 1], { extrapolateRight: 'clamp' }),
+          opacity: interpolate(effectiveFrame, [0, 60 * config.springMultiplier], [0, 1], { extrapolateRight: 'clamp' }),
         }}
       />
 
@@ -246,7 +303,7 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
           right: 0,
           height: '6px',
           background: `${colors.border.accent}20`,
-          opacity: progressOpacity,
+          opacity: progressOpacity * uiOpacityInShowcase,
         }}
       >
         <div
@@ -264,35 +321,35 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
       <div
         style={{
           position: 'absolute',
-          top: '80px',
-          right: '100px',
-          fontSize: typography.fontSize.subtitle,
-          fontWeight: typography.fontWeight.bold,
-          fontFamily: typography.fontFamily.mono,
-          color: colors.primary.accent,
-          opacity: counterOpacity,
+          top: config.counterPosition.top,
+          right: config.counterPosition.right,
+          fontSize: config.typography.fontSize.subtitle,
+          fontWeight: config.typography.fontWeight.bold,
+          fontFamily: config.typography.fontFamily.mono,
+          color: colors.text.secondary,
+          opacity: counterOpacity * uiOpacityInShowcase,
           transform: `scale(${counterScale})`,
-          textShadow: `0 0 30px ${colors.primary.glow}`,
+          textShadow: `0 0 20px ${colors.primary.glow}, 0 0 40px ${colors.background.medium}80`,
         }}
       >
-        {String(index + 1).padStart(2, '0')} <span style={{ opacity: 0.5 }}>/ {String(total).padStart(2, '0')}</span>
+        {String(index + 1).padStart(2, '0')} <span style={{ opacity: 0.5, color: colors.text.muted }}>/ {String(total).padStart(2, '0')}</span>
       </div>
 
       {/* Main content card */}
       <div
         style={{
-          width: hasScreenshot ? '1400px' : '1200px',
+          width: `${config.cardWidth}px`,
           maxWidth: '90%',
           background: glass.card.background,
           backdropFilter: glass.card.backdropFilter,
           border: glass.card.border,
           borderRadius: '32px',
-          padding: hasScreenshot ? '60px' : '80px',
+          padding: config.cardPadding,
           boxShadow: `0 8px 32px ${colors.background.medium}40, 0 0 60px ${colors.primary.glow.replace('0.4', String(glowIntensity * 0.3))}`,
-          opacity: cardOpacity,
+          opacity: isShowcaseMode ? cardOpacity * cardOpacityInShowcase : cardOpacity,
           transform: `translateX(${cardX}px) scale(${cardScale})`,
           position: 'relative',
-          overflow: 'hidden',
+          overflow: 'visible',
         }}
       >
         {/* Animated border glow */}
@@ -314,9 +371,9 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
         {/* Title - full title display with entrance animation */}
         <div
           style={{
-            fontSize: typography.fontSize.subtitle,
-            fontWeight: typography.fontWeight.semibold,
-            fontFamily: typography.fontFamily.heading,
+            fontSize: config.typography.fontSize.subtitle,
+            fontWeight: config.typography.fontWeight.semibold,
+            fontFamily: config.typography.fontFamily.heading,
             color: colors.text.primary,
             marginBottom: '28px',
             minHeight: '1.2em',
@@ -337,7 +394,7 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
               gap: '16px',
               marginBottom: '28px',
               flexWrap: 'wrap',
-              opacity: contentOpacity,
+              opacity: isShowcaseMode ? contentOpacity * detailsOpacityInShowcase : contentOpacity,
               transform: `translateY(${contentY}px) scale(${contentScale})`,
             }}
           >
@@ -351,9 +408,9 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
                     background: `linear-gradient(135deg, ${getTagColor(tag)}20 0%, ${getTagColor(tag)}30 100%)`,
                     border: `1px solid ${getTagColor(tag)}50`,
                     borderRadius: '24px',
-                    fontSize: typography.fontSize.bodySmall,
+                    fontSize: config.typography.fontSize.bodySmall,
                     color: getTagColor(tag),
-                    fontWeight: typography.fontWeight.medium,
+                    fontWeight: config.typography.fontWeight.medium,
                     transform: `scale(${pulse})`,
                     boxShadow: `0 0 ${20 * pulse}px ${getTagColor(tag)}30`,
                     transition: 'all 0.3s ease',
@@ -369,11 +426,11 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
         {/* Description - with entrance animation */}
         <div
           style={{
-            fontSize: typography.fontSize.bodyLarge,
+            fontSize: config.typography.fontSize.bodyLarge,
             color: colors.text.primary,
-            lineHeight: typography.lineHeight.relaxed,
+            lineHeight: config.typography.lineHeight.relaxed,
             marginBottom: hasScreenshot ? '40px' : '0',
-            opacity: contentOpacity,
+            opacity: isShowcaseMode ? contentOpacity * detailsOpacityInShowcase : contentOpacity,
             transform: `translateY(${contentY}px) scale(${contentScale})`,
             textShadow: `0 2px 20px ${colors.background.dark}80`,
           }}
@@ -381,12 +438,12 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
           {item.description}
         </div>
 
-        {/* Screenshot with enhanced glow */}
+        {/* Screenshot with enhanced glow - In card (fades out) */}
         {hasScreenshot && item.screenshot && (
           <div
             style={{
               position: 'relative',
-              opacity: screenshotOpacity,
+              opacity: isShowcaseMode ? screenshotOpacity * (1 - showcaseProgress) : screenshotOpacity,
               transform: `scale(${screenshotScale})`,
             }}
           >
@@ -432,7 +489,7 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
                   position: 'absolute',
                   inset: 0,
                   background: `linear-gradient(180deg, transparent 0%, ${colors.primary.main}10 50%, transparent 100%)`,
-                  transform: `translateY(${interpolate(effectiveFrame, [70, 150], [-100, 600], { extrapolateRight: 'clamp' })}px)`,
+                  transform: `translateY(${interpolate(effectiveFrame, [70, 150], config.scanlineRange, { extrapolateRight: 'clamp' })}px)`,
                   opacity: 0.5,
                   pointerEvents: 'none',
                   zIndex: 1,
@@ -444,7 +501,7 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
                 style={{
                   width: '100%',
                   height: 'auto',
-                  maxHeight: '500px',
+                  maxHeight: config.screenshotMaxHeight,
                   objectFit: 'contain',
                   display: 'block',
                 }}
@@ -453,6 +510,45 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({
           </div>
         )}
       </div>
+
+      {/* FULLSCREEN SCREENSHOT SHOWCASE - Second screenshot element that fades in at center */}
+      {hasScreenshot && item.screenshot && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: `${currentWidth}px`,
+            transform: 'translate(-50%, -50%)',
+            opacity: showcaseProgress,
+            zIndex: 100,
+            pointerEvents: 'none',
+          }}
+        >
+          {/* Image container with animated border */}
+          <div
+            style={{
+              borderRadius: '16px',
+              overflow: 'hidden',
+              border: `2px solid ${colors.primary.accent}${Math.floor(glowIntensity * 100).toString(16).padStart(2, '0')}`,
+              boxShadow: `0 0 ${40 * glowIntensity}px ${colors.primary.glow}, inset 0 0 60px ${colors.primary.glow.replace('0.4', '0.1')}`,
+              background: colors.background.dark,
+              position: 'relative',
+            }}
+          >
+            <Img
+              src={item.screenshot.startsWith('http') ? item.screenshot : staticFile(item.screenshot)}
+              style={{
+                width: '100%',
+                height: 'auto',
+                maxHeight: `${currentMaxHeight}px`,
+                objectFit: 'contain',
+                display: 'block',
+              }}
+            />
+          </div>
+        </div>
+      )}
     </AbsoluteFill>
   );
 };

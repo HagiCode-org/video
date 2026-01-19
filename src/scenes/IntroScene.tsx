@@ -174,7 +174,6 @@ export const IntroScene: React.FC = () => {
             transform: 'translate(-50%, -50%)',
             fontSize: '120px',
             fontWeight: 700,
-            fontFamily: 'Space Grotesk, Inter, sans-serif',
             background: `linear-gradient(135deg, ${colors.primary.from}, ${colors.primary.to})`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -198,7 +197,6 @@ export const IntroScene: React.FC = () => {
             style={{
               fontSize: '48px',
               fontWeight: 600,
-              fontFamily: 'Space Grotesk, Inter, sans-serif',
               background: `linear-gradient(135deg, ${colors.primary.from}, ${colors.primary.to})`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -222,7 +220,6 @@ export const IntroScene: React.FC = () => {
             fontSize: '32px',
             fontWeight: 400,
             color: colors.text.secondary,
-            fontFamily: 'DM Sans, Inter, sans-serif',
             display: 'flex',
             alignItems: 'center',
             gap: '12px',

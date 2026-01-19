@@ -168,7 +168,6 @@ export const FeaturesScene: React.FC = () => {
           style={{
             fontSize: '56px',
             fontWeight: 700,
-            fontFamily: 'Space Grotesk, Inter, sans-serif',
             background: `linear-gradient(135deg, ${colors.primary.from}, ${colors.primary.to})`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',

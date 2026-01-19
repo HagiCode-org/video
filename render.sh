@@ -12,16 +12,22 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 IMAGE_NAME="hagicode-renderer:latest"
+BASE_IMAGE_NAME="hagicode-renderer:base"
 REBUILD=false
+REBUILD_BASE=false
 RENDER_ARGS=()
 BUILD_ARGS=()
 
-# Parse arguments for --no-cache flag
+# Parse arguments for --no-cache and --rebuild-base flags
 while [[ $# -gt 0 ]]; do
     case $1 in
         --no-cache)
-            REBUILD=true
+            REBUILD_BASE=true
             BUILD_ARGS+=("--no-cache")
+            shift
+            ;;
+        --rebuild-base)
+            REBUILD_BASE=true
             shift
             ;;
         *)
@@ -62,28 +68,28 @@ if ! docker info &> /dev/null; then
     exit 1
 fi
 
-# Check if image exists, build if not or --no-cache is specified
-if ! docker image inspect "${IMAGE_NAME}" &> /dev/null; then
-    REBUILD=true
+# Check if base image exists, build if not or --no-cache/--rebuild-base is specified
+if ! docker image inspect "${BASE_IMAGE_NAME}" &> /dev/null; then
+    REBUILD_BASE=true
 fi
 
-if [ "$REBUILD" = true ]; then
+if [ "$REBUILD_BASE" = true ]; then
     print_banner
-    if [ "$REBUILD" = true ] && [ "${#BUILD_ARGS[@]}" -gt 0 ]; then
-        echo -e "${YELLOW}Building Docker image with --no-cache flag (this may take 3-5 minutes)...${NC}"
+    if [ "${#BUILD_ARGS[@]}" -gt 0 ]; then
+        echo -e "${YELLOW}Building base Docker image with --no-cache flag (this may take 3-5 minutes)...${NC}"
     else
-        echo -e "${YELLOW}Docker image not found. Building image (this may take 3-5 minutes)...${NC}"
+        echo -e "${YELLOW}Building base Docker image (this may take 3-5 minutes)...${NC}"
     fi
     echo ""
 
-    # Build the image
-    if docker build "${BUILD_ARGS[@]}" -t "${IMAGE_NAME}" .; then
+    # Build the base image (contains all dependencies)
+    if docker build "${BUILD_ARGS[@]}" --target base -t "${BASE_IMAGE_NAME}" .; then
         echo ""
-        echo -e "${GREEN}✓ Docker image built successfully${NC}"
+        echo -e "${GREEN}✓ Base Docker image built successfully${NC}"
         echo ""
     else
         echo ""
-        echo -e "${RED}❌ Failed to build Docker image${NC}"
+        echo -e "${RED}❌ Failed to build base Docker image${NC}"
         echo ""
         echo "Possible causes:"
         echo "  1. Network issues: Check your internet connection"
@@ -92,6 +98,23 @@ if [ "$REBUILD" = true ]; then
         echo ""
         exit 1
     fi
+fi
+
+# Always rebuild the final image (fast, just adds source code layer)
+print_banner
+echo -e "${GRAY}Building final image (fast - adds source code layer)...${NC}"
+echo ""
+
+# Build the final image (just adds source code on top of base)
+if docker build -t "${IMAGE_NAME}" .; then
+    echo ""
+    echo -e "${GREEN}✓ Final Docker image built successfully${NC}"
+    echo ""
+else
+    echo ""
+    echo -e "${RED}❌ Failed to build final Docker image${NC}"
+    echo ""
+    exit 1
 fi
 
 # Run the container with the simplified command (using ENTRYPOINT)

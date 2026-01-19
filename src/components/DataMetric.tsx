@@ -63,7 +63,6 @@ export const DataMetric: React.FC<DataMetricProps> = ({
         style={{
           fontSize: valueSize,
           fontWeight: 700,
-          fontFamily: 'Space Grotesk, Inter, sans-serif',
           background: accent
             ? `linear-gradient(135deg, ${colors.secondary.from}, ${colors.secondary.to})`
             : `linear-gradient(135deg, ${colors.primary.from}, ${colors.primary.to})`,

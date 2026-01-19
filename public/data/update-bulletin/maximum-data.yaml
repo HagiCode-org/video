@@ -7,6 +7,7 @@ highlights:
     description: 支持 GitHub OAuth 登录，可将提案内容同步为 GitHub Issues，通过 metadata 字段管理同步状态
     tags:
       - feature
+    # screenshot: /screenshots/01-create-normal-session.png
   - id: sdd-initialization-check
     title: SDD 初始化检查机制
     description: 新建项目时自动检测 SDD 模板初始化状态，创建提案会话前验证 SDD 是否已初始化
@@ -17,6 +18,7 @@ highlights:
     description: 后端检测容器环境并提供 SystemInfo API，前端根据环境条件渲染"在 VS Code 中打开"功能
     tags:
       - feature
+    # screenshot: /screenshots/05-mode-switch.png
 minorItems:
   - category: bugfix
     title: 会话列表折叠展开状态视觉统一

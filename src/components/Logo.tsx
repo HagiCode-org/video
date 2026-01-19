@@ -58,7 +58,6 @@ export const Logo: React.FC<LogoProps> = ({
         style={{
           fontSize: `${fontSize}px`,
           fontWeight: 700,
-          fontFamily: 'Inter, system-ui, sans-serif',
           ...gradientStyle,
           transform: `scale(${scale})`,
           opacity,
