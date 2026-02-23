@@ -1,0 +1,13 @@
+# Hagicode 更新简报 - 最小测试数据
+# 这是用于测试的最小数据集，包含最少必需字段
+
+version: v1.1.5
+releaseDate: 2026-01-10
+
+# 空的重点修改项列表
+highlights: []
+
+# 次要修改项列表 - 仅包含一个必需项
+minorItems:
+  - category: bugfix
+    title: 修复登录问题

@@ -1,0 +1,142 @@
+#!/bin/bash
+# Hagicode Video Renderer - Unix/Linux Entry Point
+# This script provides a user-friendly interface for rendering videos via Docker
+
+# Chalk for colored console output
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+GRAY='\033[0;90m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+IMAGE_NAME="hagicode-renderer:latest"
+BASE_IMAGE_NAME="hagicode-renderer:base"
+REBUILD=false
+REBUILD_BASE=false
+RENDER_ARGS=()
+BUILD_ARGS=()
+
+# Parse arguments for --no-cache and --rebuild-base flags
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --no-cache)
+            REBUILD_BASE=true
+            BUILD_ARGS+=("--no-cache")
+            shift
+            ;;
+        --rebuild-base)
+            REBUILD_BASE=true
+            shift
+            ;;
+        *)
+            RENDER_ARGS+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# Print banner
+print_banner() {
+    echo -e "${CYAN}🎬 Hagicode Video Renderer${NC}"
+    echo -e "${GRAY}Docker-enabled rendering environment${NC}"
+    echo ""
+}
+
+# Check if Docker is installed
+if ! command -v docker &> /dev/null; then
+    print_banner
+    echo -e "${RED}❌ Error: Docker is not installed or not in PATH${NC}"
+    echo ""
+    echo "To use this renderer, please install Docker:"
+    echo "  - Linux: https://docs.docker.com/engine/install/"
+    echo "  - macOS: https://docs.docker.com/desktop/install/mac-install/"
+    echo ""
+    exit 1
+fi
+
+# Check if Docker daemon is running
+if ! docker info &> /dev/null; then
+    print_banner
+    echo -e "${RED}❌ Error: Docker daemon is not running${NC}"
+    echo ""
+    echo "Please start Docker:"
+    echo "  - Linux: sudo systemctl start docker"
+    echo "  - macOS: Open Docker Desktop from Applications"
+    echo ""
+    exit 1
+fi
+
+# Check if base image exists, build if not or --no-cache/--rebuild-base is specified
+if ! docker image inspect "${BASE_IMAGE_NAME}" &> /dev/null; then
+    REBUILD_BASE=true
+fi
+
+if [ "$REBUILD_BASE" = true ]; then
+    print_banner
+    if [ "${#BUILD_ARGS[@]}" -gt 0 ]; then
+        echo -e "${YELLOW}Building base Docker image with --no-cache flag (this may take 3-5 minutes)...${NC}"
+    else
+        echo -e "${YELLOW}Building base Docker image (this may take 3-5 minutes)...${NC}"
+    fi
+    echo ""
+
+    # Build the base image (contains all dependencies)
+    if docker build "${BUILD_ARGS[@]}" --target base -t "${BASE_IMAGE_NAME}" .; then
+        echo ""
+        echo -e "${GREEN}✓ Base Docker image built successfully${NC}"
+        echo ""
+    else
+        echo ""
+        echo -e "${RED}❌ Failed to build base Docker image${NC}"
+        echo ""
+        echo "Possible causes:"
+        echo "  1. Network issues: Check your internet connection"
+        echo "  2. Dependency conflicts: Check package.json for errors"
+        echo "  3. Disk space: Ensure at least 5GB free space"
+        echo ""
+        exit 1
+    fi
+fi
+
+# Always rebuild the final image (fast, just adds source code layer)
+print_banner
+echo -e "${GRAY}Building final image (fast - adds source code layer)...${NC}"
+echo ""
+
+# Build the final image (just adds source code on top of base)
+if docker build -t "${IMAGE_NAME}" .; then
+    echo ""
+    echo -e "${GREEN}✓ Final Docker image built successfully${NC}"
+    echo ""
+else
+    echo ""
+    echo -e "${RED}❌ Failed to build final Docker image${NC}"
+    echo ""
+    exit 1
+fi
+
+# Run the container with the simplified command (using ENTRYPOINT)
+# Note: We only mount public/data (input) and out (output) directories
+# Source code is already baked into the Docker image
+#
+# Resource limits:
+#   --cpus="$(nproc)": Use all available CPU cores
+#   --memory=8g: Limit to 8GB of RAM (prevents OOM on systems with less memory)
+#   --memory-swap=8g: Disable swap (keep total memory at 8GB)
+#   --pids-limit 4096: Increase process limit for Chrome/Chromium
+docker run --rm \
+    --cpus="$(nproc)" \
+    --memory=8g \
+    --memory-swap=8g \
+    --pids-limit 4096 \
+    -v "${PWD}/public/data:/workspace/public/data" \
+    -v "${PWD}/public/audio:/workspace/public/audio" \
+    -v "${PWD}/public/video:/workspace/public/video" \
+    -v "${PWD}/out:/workspace/out" \
+    "${IMAGE_NAME}" \
+    "${RENDER_ARGS[@]}"
+
+# Exit with the Docker container's exit code
+exit $?
